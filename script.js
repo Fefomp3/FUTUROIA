@@ -247,7 +247,7 @@ function mostraPergunta() {
       estadoAtual = alternativa.proximo;
       mostraPergunta();
     });
-
+ 
     caixaAlternativas.appendChild(botaoAlternativas);
   });
 }
