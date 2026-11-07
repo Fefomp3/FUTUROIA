@@ -9,16 +9,39 @@
   </head>
 
 <body>
-  
   <div class="caixa-principal">
-    <h1>IA nas escolas</h1>
-    <p class="progresso" aria-live="polite"></p>
-    <div class="caixa-perguntas" aria-live="polite"></div>
-    <div class="caixa-alternativas"></div>
-    <div class="caixa-resultado" aria-live="polite">
-      <p class="texto-resultado"></p>
-    </div>
-    <button class="botao-reiniciar" type="button">Jogar novamente</button>
+    <header class="cabecalho">
+      <span class="selo">Uma aventura interativa</span>
+      <h1>IA nas escolas</h1>
+    </header>
+
+    <section class="tela-inicial" aria-labelledby="titulo-inicial">
+      <p class="sobre-titulo">FEIRA DE CIÊNCIAS • ESCOLHAS COM IMPACTO</p>
+      <h2 id="titulo-inicial">Toda boa ideia começa com uma pergunta.</h2>
+      <p class="introducao">Prepare-se para uma aventura sobre inteligência artificial, criatividade e escolhas responsáveis. Que nome vamos colocar no seu crachá?</p>
+      <form class="formulario-inicial">
+        <label for="nickname">Seu nickname</label>
+        <input id="nickname" name="nickname" type="text" maxlength="20" autocomplete="nickname" placeholder="Ex.: Curioso(a)" />
+        <button class="botao-iniciar" type="submit">Começar a aventura <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <main class="conteudo-jogo" hidden>
+      <p class="progresso" aria-live="polite"></p>
+      <div class="caixa-perguntas" aria-live="polite"></div>
+      <div class="caixa-alternativas"></div>
+      <div class="caixa-resultado" aria-live="polite">
+        <p class="texto-resultado"></p>
+      </div>
+      <button class="botao-reiniciar" type="button">Jogar novamente</button>
+    </main>
+
+    <footer class="creditos">
+      <p><strong>Feito em equipe</strong></p>
+      <p>Apoio de código: Professor Fabio Cesar</p>
+      <p>Desenvolvimento do código: Felipe Tozzini nº 13</p>
+      <p>Desenvolvimento da história: Gabriel Alves nº 14</p>
+    </footer>
   </div>
   <script src="script.js"></script>
 </body>
