@@ -346,14 +346,14 @@ function mostraPergunta() {
     ].join("\n\n");
 
     if (etapaAtual?.status === "ruim") {
-      textoResultado.style.color = "#ffd166";
-      caixaResultado.style.border = "2px solid #ffd166";
+      textoResultado.style.color = "#8b2e2e";
+      caixaResultado.style.border = "2px solid #b04b43";
     } else if (etapaAtual?.status === "excelente") {
-      textoResultado.style.color = "#89fd2b";
-      caixaResultado.style.border = "2px solid #89fd2b";
+      textoResultado.style.color = "#1d5e3b";
+      caixaResultado.style.border = "2px solid #246b4a";
     } else {
-      textoResultado.style.color = "#deffd7";
-      caixaResultado.style.border = "2px solid #213321";
+      textoResultado.style.color = "#263a30";
+      caixaResultado.style.border = "2px solid #718276";
     }
 
     return;
@@ -383,7 +383,7 @@ function mostraPergunta() {
 }
 
 caixaResultado.style.display = "none";
-textoResultado.style.color = "#deffd7";
+textoResultado.style.color = "#263a30";
 caixaResultado.style.border = "1px solid transparent";
 botaoReiniciar.style.display = "none";
 
@@ -401,7 +401,9 @@ botaoReiniciar.addEventListener("click", () => {
   situacoesRespondidas = 0;
   progresso.textContent = "";
   textoResultado.textContent = "";
-  textoResultado.style.color = "#deffd7";
+  textoResultado.style.color = "#263a30";
   caixaResultado.style.border = "1px solid transparent";
-  mostraPergunta();
+  conteudoJogo.hidden = true;
+  telaInicial.hidden = false;
+  campoNickname.focus();
 });
