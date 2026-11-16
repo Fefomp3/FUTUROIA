@@ -3,8 +3,11 @@ const progresso = document.querySelector(".progresso");
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
 const caixaAlternativas = document.querySelector(".caixa-alternativas");
 const caixaResultado = document.querySelector(".caixa-resultado");
+const tituloFinal = document.querySelector(".titulo-final");
+const botaoVerMais = document.querySelector(".botao-ver-mais");
 const textoResultado = document.querySelector(".texto-resultado");
 const botaoReiniciar = document.querySelector(".botao-reiniciar");
+const botaoTentarNovamente = document.querySelector(".botao-tentar-novamente");
 const telaInicial = document.querySelector(".tela-inicial");
 const formularioInicial = document.querySelector(".formulario-inicial");
 const campoNickname = document.querySelector("#nickname");
@@ -365,6 +368,20 @@ function mostraPergunta() {
 
   if (!etapaAtual || etapaAtual.tipo === "final") {
     botaoCreditosFinal.hidden = false;
+    botaoTentarNovamente.hidden = false;
+    const statusFinal = etapaAtual?.status;
+    tituloFinal.textContent = statusFinal === "ruim"
+      ? "GAME OVER"
+      : statusFinal === "excelente"
+        ? "VITÓRIA!!!"
+        : "THE END";
+    tituloFinal.className = `titulo-final${statusFinal ? ` titulo-final-${statusFinal}` : ""}`;
+    tituloFinal.hidden = false;
+    textoResultado.hidden = true;
+    botaoVerMais.hidden = false;
+    botaoVerMais.textContent = "Ver mais";
+    botaoVerMais.setAttribute("aria-expanded", "false");
+    botaoVerMais.setAttribute("aria-label", "Ver o resumo completo das escolhas");
     caixaPerguntas.textContent = `${nickname}, você decidiu o futuro da IA!`;
     progresso.textContent = `${situacoesRespondidas} situações concluídas`;
     caixaAlternativas.innerHTML = "";
@@ -392,10 +409,16 @@ function mostraPergunta() {
   }
 
   botaoCreditosFinal.hidden = true;
+  botaoTentarNovamente.hidden = true;
   progresso.textContent = `Situação ${situacoesRespondidas + 1}`;
   caixaPerguntas.textContent = etapaAtual.enunciado;
   caixaAlternativas.innerHTML = "";
   caixaResultado.style.display = "none";
+  tituloFinal.hidden = true;
+  textoResultado.hidden = true;
+  botaoVerMais.hidden = true;
+  botaoVerMais.textContent = "Ver mais";
+  botaoVerMais.setAttribute("aria-expanded", "false");
   botaoReiniciar.style.display = "none";
 
   etapaAtual.alternativas.forEach((alternativa) => {
@@ -420,6 +443,17 @@ textoResultado.style.color = "var(--cor-resultado-normal)";
 caixaResultado.style.border = "1px solid transparent";
 botaoReiniciar.style.display = "none";
 
+botaoVerMais.addEventListener("click", () => {
+  const expandido = botaoVerMais.getAttribute("aria-expanded") !== "true";
+  textoResultado.hidden = !expandido;
+  botaoVerMais.textContent = expandido ? "Ver menos" : "Ver mais";
+  botaoVerMais.setAttribute("aria-expanded", String(expandido));
+  botaoVerMais.setAttribute(
+    "aria-label",
+    expandido ? "Recolher o resumo das escolhas" : "Ver o resumo completo das escolhas"
+  );
+});
+
 botoesCreditos.forEach((botao) => {
   botao.addEventListener("click", abreTelaCreditos);
 });
@@ -440,7 +474,7 @@ formularioInicial.addEventListener("submit", (evento) => {
   mostraPergunta();
 });
 
-botaoReiniciar.addEventListener("click", () => {
+function limpaJornada() {
   estadoAtual = "inicio";
   escolhas.length = 0;
   situacoesRespondidas = 0;
@@ -448,9 +482,26 @@ botaoReiniciar.addEventListener("click", () => {
   textoResultado.textContent = "";
   textoResultado.style.color = "var(--cor-resultado-normal)";
   caixaResultado.style.border = "1px solid transparent";
-  conteudoJogo.hidden = true;
+  tituloFinal.hidden = true;
+  textoResultado.hidden = true;
+  botaoVerMais.hidden = true;
+  botaoVerMais.textContent = "Ver mais";
+  botaoVerMais.setAttribute("aria-expanded", "false");
   botaoCreditosFinal.hidden = true;
+  botaoTentarNovamente.hidden = true;
   telaCreditos.hidden = true;
+}
+
+botaoReiniciar.addEventListener("click", () => {
+  limpaJornada();
+  conteudoJogo.hidden = true;
   telaInicial.hidden = false;
   campoNickname.focus();
+});
+
+botaoTentarNovamente.addEventListener("click", () => {
+  limpaJornada();
+  telaInicial.hidden = true;
+  conteudoJogo.hidden = false;
+  mostraPergunta();
 });

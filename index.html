@@ -55,9 +55,12 @@
       <div class="caixa-perguntas" aria-live="polite"></div>
       <div class="caixa-alternativas"></div>
       <div class="caixa-resultado" aria-live="polite">
-        <p class="texto-resultado"></p>
+        <h2 class="titulo-final" hidden></h2>
+        <button class="botao-ver-mais" type="button" aria-controls="resumo-escolhas" aria-expanded="false" aria-label="Ver o resumo completo das escolhas" hidden>Ver mais</button>
+        <p class="texto-resultado" id="resumo-escolhas" hidden></p>
       </div>
       <button class="botao-reiniciar" type="button">Voltar à tela inicial</button>
+      <button class="botao-iniciar botao-tentar-novamente" type="button" hidden>Tente novamente <span aria-hidden="true">↻</span></button>
       <button class="botao-creditos botao-creditos-final" type="button" aria-controls="creditos" hidden>Ver créditos</button>
     </main>
 
