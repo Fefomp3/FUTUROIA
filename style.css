@@ -28,7 +28,6 @@
   --cor-sombra-etapa: rgba(23, 41, 46, 0.09);
   --cor-sombra-alternativa: rgba(23, 41, 46, 0.2);
   --cor-borda-resultado: #b8c6a9;
-  --cor-creditos: #59665a;
   --cor-resultado-ruim: #8b2e2e;
   --cor-resultado-excelente: #1d5e3b;
   --cor-resultado-normal: #263a30;
@@ -70,7 +69,6 @@ body[data-tema="escuro"] {
   --cor-sombra-etapa: rgba(5, 12, 14, 0.28);
   --cor-sombra-alternativa: rgba(5, 12, 14, 0.4);
   --cor-borda-resultado: #677f6b;
-  --cor-creditos: #c4cfbf;
   --cor-resultado-ruim: #ffb0a5;
   --cor-resultado-excelente: #b9efb6;
   --cor-resultado-normal: #eaf1dc;
@@ -438,23 +436,88 @@ h1 {
   white-space: pre-line;
 }
 
-.creditos {
-  margin-top: 20px;
-  border-top: 2px dashed var(--cor-borda);
-  color: var(--cor-creditos);
-  font-size: 0.82rem;
-  line-height: 1.55;
-  padding-top: 18px;
+.tela-creditos {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 34px 0 18px;
+  animation: entrada 350ms ease-out both;
 }
 
-.creditos p {
-  margin: 2px 0;
+.arte-creditos {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  font-size: 2.4rem;
 }
 
-.creditos strong {
+.arte-creditos span {
+  display: inline-block;
+  animation: flutuar 2.4s ease-in-out infinite;
+}
+
+.arte-creditos span:nth-child(2) {
+  animation-delay: 180ms;
+}
+
+.arte-creditos span:nth-child(3) {
+  animation-delay: 360ms;
+}
+
+.tela-creditos h2 {
+  margin: 0 auto 12px;
+  color: var(--cor-tinta);
+  font-size: clamp(1.8rem, 5vw, 2.3rem);
+}
+
+.lista-creditos {
+  display: grid;
+  gap: 10px;
+  max-width: 460px;
+  margin: 24px auto 0;
+  text-align: left;
+}
+
+.credito-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--cor-borda-resultado);
+  background: var(--cor-secundaria);
+  box-shadow: 3px 3px 0 var(--cor-sombra-etapa);
+}
+
+.credito-icone {
+  flex: 0 0 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.credito-item p {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  line-height: 1.5;
+}
+
+.credito-item strong {
   color: var(--cor-tinta);
   font-family: "Courier New", monospace;
-  text-transform: uppercase;
+}
+
+.botao-voltar-creditos {
+  max-width: 360px;
+  margin: 24px auto 0;
+}
+
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px) rotate(4deg);
+  }
 }
 
 [hidden] {
@@ -509,5 +572,12 @@ h1 {
   .botao-creditos-final {
     width: 100%;
     margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tela-creditos,
+  .arte-creditos span {
+    animation: none;
   }
 }

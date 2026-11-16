@@ -47,7 +47,7 @@
         <input id="nickname" name="nickname" type="text" maxlength="20" autocomplete="nickname" placeholder="Ex.: Curioso(a)" />
         <button class="botao-iniciar" type="submit">Começar a aventura <span aria-hidden="true">→</span></button>
       </form>
-      <button class="botao-creditos botao-creditos-inicial" type="button" aria-controls="creditos" aria-expanded="false">Conheça a equipe</button>
+      <button class="botao-creditos botao-creditos-inicial" type="button" aria-controls="creditos">Conheça a equipe</button>
     </section>
 
     <main class="conteudo-jogo" hidden>
@@ -58,15 +58,34 @@
         <p class="texto-resultado"></p>
       </div>
       <button class="botao-reiniciar" type="button">Voltar à tela inicial</button>
-      <button class="botao-creditos botao-creditos-final" type="button" aria-controls="creditos" aria-expanded="false" hidden>Ver créditos</button>
+      <button class="botao-creditos botao-creditos-final" type="button" aria-controls="creditos" hidden>Ver créditos</button>
     </main>
 
-    <footer class="creditos" id="creditos" hidden>
-      <p><strong>Feito em equipe</strong></p>
-      <p>Apoio de código: Professor Fabio Cesar</p>
-      <p>Desenvolvimento do código: Felipe Tozzini nº 13</p>
-      <p>Desenvolvimento da história: Gabriel Alves nº 14</p>
-    </footer>
+    <section class="tela-creditos" id="creditos" aria-labelledby="titulo-creditos" hidden>
+      <div class="arte-creditos" aria-hidden="true">
+        <span>✨</span><span>🎮</span><span>🤖</span>
+      </div>
+      <p class="sobre-titulo">Feito em equipe</p>
+      <h2 id="titulo-creditos" tabindex="-1">Créditos da aventura</h2>
+      <p class="introducao">Uma ideia ganha vida quando muita gente colabora. Obrigado por jogar!</p>
+
+      <div class="lista-creditos">
+        <article class="credito-item">
+          <span class="credito-icone" aria-hidden="true">🧑‍🏫</span>
+          <p><strong>Apoio de código</strong><br />Professor Fabio Cesar</p>
+        </article>
+        <article class="credito-item">
+          <span class="credito-icone" aria-hidden="true">💻</span>
+          <p><strong>Desenvolvimento do código</strong><br />Felipe Tozzini nº 13</p>
+        </article>
+        <article class="credito-item">
+          <span class="credito-icone" aria-hidden="true">✍️</span>
+          <p><strong>Desenvolvimento da história</strong><br />Gabriel Alves nº 14</p>
+        </article>
+      </div>
+
+      <button class="botao-iniciar botao-voltar-creditos" type="button">← Voltar à aventura</button>
+    </section>
   </div>
   <script src="script.js"></script>
 </body>

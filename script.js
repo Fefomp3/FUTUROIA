@@ -9,16 +9,25 @@ const telaInicial = document.querySelector(".tela-inicial");
 const formularioInicial = document.querySelector(".formulario-inicial");
 const campoNickname = document.querySelector("#nickname");
 const conteudoJogo = document.querySelector(".conteudo-jogo");
-const creditos = document.querySelector(".creditos");
+const telaCreditos = document.querySelector(".tela-creditos");
+const botaoVoltarCreditos = document.querySelector(".botao-voltar-creditos");
 const botoesCreditos = document.querySelectorAll(".botao-creditos");
 const botaoCreditosFinal = document.querySelector(".botao-creditos-final");
 const botaoTema = document.querySelector(".botao-tema");
+const tituloCreditos = document.querySelector("#titulo-creditos");
 
-function atualizaCreditos(visivel) {
-  creditos.hidden = !visivel;
-  botoesCreditos.forEach((botao) => {
-    botao.setAttribute("aria-expanded", String(visivel));
-  });
+let telaAnteriorCreditos = telaInicial;
+let botaoAnteriorCreditos;
+
+function abreTelaCreditos(evento) {
+  botaoAnteriorCreditos = evento.currentTarget;
+  telaAnteriorCreditos = botaoAnteriorCreditos.classList.contains("botao-creditos-final")
+    ? conteudoJogo
+    : telaInicial;
+  telaInicial.hidden = true;
+  conteudoJogo.hidden = true;
+  telaCreditos.hidden = false;
+  tituloCreditos.focus();
 }
 
 function defineTema(tema) {
@@ -383,7 +392,6 @@ function mostraPergunta() {
   }
 
   botaoCreditosFinal.hidden = true;
-  atualizaCreditos(false);
   progresso.textContent = `Situação ${situacoesRespondidas + 1}`;
   caixaPerguntas.textContent = etapaAtual.enunciado;
   caixaAlternativas.innerHTML = "";
@@ -413,15 +421,20 @@ caixaResultado.style.border = "1px solid transparent";
 botaoReiniciar.style.display = "none";
 
 botoesCreditos.forEach((botao) => {
-  botao.addEventListener("click", () => {
-    atualizaCreditos(creditos.hidden);
-  });
+  botao.addEventListener("click", abreTelaCreditos);
+});
+
+botaoVoltarCreditos.addEventListener("click", () => {
+  telaCreditos.hidden = true;
+  telaInicial.hidden = telaAnteriorCreditos !== telaInicial;
+  conteudoJogo.hidden = telaAnteriorCreditos !== conteudoJogo;
+  botaoAnteriorCreditos.focus();
 });
 
 formularioInicial.addEventListener("submit", (evento) => {
   evento.preventDefault();
   nickname = campoNickname.value.trim() || "Visitante";
-  atualizaCreditos(false);
+  telaCreditos.hidden = true;
   telaInicial.hidden = true;
   conteudoJogo.hidden = false;
   mostraPergunta();
@@ -437,7 +450,7 @@ botaoReiniciar.addEventListener("click", () => {
   caixaResultado.style.border = "1px solid transparent";
   conteudoJogo.hidden = true;
   botaoCreditosFinal.hidden = true;
-  atualizaCreditos(false);
+  telaCreditos.hidden = true;
   telaInicial.hidden = false;
   campoNickname.focus();
 });
