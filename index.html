@@ -8,22 +8,46 @@
     <title>IA nas escolas</title>
   </head>
 
-<body>
+<body data-tema="claro">
   <div class="caixa-principal">
     <header class="cabecalho">
+      <button class="botao-tema" type="button" aria-label="Alternar tema claro ou escuro" aria-pressed="false">Tema: claro</button>
       <span class="selo">Uma aventura interativa</span>
       <h1>IA nas escolas</h1>
     </header>
 
     <section class="tela-inicial" aria-labelledby="titulo-inicial">
-      <p class="sobre-titulo">FEIRA DE CIÊNCIAS • AÇÕES TEM CONSEQUÊNCIAS</p>
-      <h2 id="titulo-inicial">Toda boa ideia começa com uma pergunta.</h2>
-      <p class="introducao">Prepare-se para uma aventura sobre inteligência artificial, criatividade e escolhas responsáveis. Que nome vamos colocar no seu crachá?</p>
+      <p class="sobre-titulo">FEIRA DE CIÊNCIAS • ESCOLHAS TÊM CONSEQUÊNCIAS</p>
+      <h2 id="titulo-inicial">Sua equipe está contando com você.</h2>
+      <p class="introducao">A feira de ciências está chegando! Ajude sua equipe a preparar um estande sobre inteligência artificial, criatividade e responsabilidade. Cada decisão muda o rumo da história.</p>
+
+      <section class="guia-aventura" aria-label="Como funciona a aventura">
+        <h3>Na aventura, você vai...</h3>
+        <div class="etapas-aventura">
+          <article class="etapa-aventura">
+            <span class="numero-etapa" aria-hidden="true">01</span>
+            <h4>Investigar</h4>
+            <p>Enfrente situações inspiradas na feira de ciências.</p>
+          </article>
+          <article class="etapa-aventura">
+            <span class="numero-etapa" aria-hidden="true">02</span>
+            <h4>Escolher</h4>
+            <p>Pense nos impactos de cada decisão para sua equipe.</p>
+          </article>
+          <article class="etapa-aventura">
+            <span class="numero-etapa" aria-hidden="true">03</span>
+            <h4>Refletir</h4>
+            <p>Veja como suas escolhas constroem o desfecho.</p>
+          </article>
+        </div>
+      </section>
+
       <form class="formulario-inicial">
-        <label for="nickname">Seu nickname</label>
+        <label for="nickname">Como podemos chamar você?</label>
         <input id="nickname" name="nickname" type="text" maxlength="20" autocomplete="nickname" placeholder="Ex.: Curioso(a)" />
         <button class="botao-iniciar" type="submit">Começar a aventura <span aria-hidden="true">→</span></button>
       </form>
+      <button class="botao-creditos botao-creditos-inicial" type="button" aria-controls="creditos" aria-expanded="false">Conheça a equipe</button>
     </section>
 
     <main class="conteudo-jogo" hidden>
@@ -34,9 +58,10 @@
         <p class="texto-resultado"></p>
       </div>
       <button class="botao-reiniciar" type="button">Voltar à tela inicial</button>
+      <button class="botao-creditos botao-creditos-final" type="button" aria-controls="creditos" aria-expanded="false" hidden>Ver créditos</button>
     </main>
 
-    <footer class="creditos">
+    <footer class="creditos" id="creditos" hidden>
       <p><strong>Feito em equipe</strong></p>
       <p>Apoio de código: Professor Fabio Cesar</p>
       <p>Desenvolvimento do código: Felipe Tozzini nº 13</p>

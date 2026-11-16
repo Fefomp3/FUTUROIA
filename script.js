@@ -9,6 +9,28 @@ const telaInicial = document.querySelector(".tela-inicial");
 const formularioInicial = document.querySelector(".formulario-inicial");
 const campoNickname = document.querySelector("#nickname");
 const conteudoJogo = document.querySelector(".conteudo-jogo");
+const creditos = document.querySelector(".creditos");
+const botoesCreditos = document.querySelectorAll(".botao-creditos");
+const botaoCreditosFinal = document.querySelector(".botao-creditos-final");
+const botaoTema = document.querySelector(".botao-tema");
+
+function atualizaCreditos(visivel) {
+  creditos.hidden = !visivel;
+  botoesCreditos.forEach((botao) => {
+    botao.setAttribute("aria-expanded", String(visivel));
+  });
+}
+
+function defineTema(tema) {
+  const temaEscuro = tema === "escuro";
+  document.body.dataset.tema = temaEscuro ? "escuro" : "claro";
+  botaoTema.textContent = `Tema: ${temaEscuro ? "escuro" : "claro"}`;
+  botaoTema.setAttribute("aria-pressed", String(temaEscuro));
+}
+
+botaoTema.addEventListener("click", () => {
+  defineTema(document.body.dataset.tema === "escuro" ? "claro" : "escuro");
+});
 
 const fluxo = {
   inicio: {
@@ -333,6 +355,7 @@ function mostraPergunta() {
   const etapaAtual = fluxo[estadoAtual];
 
   if (!etapaAtual || etapaAtual.tipo === "final") {
+    botaoCreditosFinal.hidden = false;
     caixaPerguntas.textContent = `${nickname}, você decidiu o futuro da IA!`;
     progresso.textContent = `${situacoesRespondidas} situações concluídas`;
     caixaAlternativas.innerHTML = "";
@@ -346,19 +369,21 @@ function mostraPergunta() {
     ].join("\n\n");
 
     if (etapaAtual?.status === "ruim") {
-      textoResultado.style.color = "#8b2e2e";
-      caixaResultado.style.border = "2px solid #b04b43";
+      textoResultado.style.color = "var(--cor-resultado-ruim)";
+      caixaResultado.style.border = "2px solid var(--cor-borda-resultado-ruim)";
     } else if (etapaAtual?.status === "excelente") {
-      textoResultado.style.color = "#1d5e3b";
-      caixaResultado.style.border = "2px solid #246b4a";
+      textoResultado.style.color = "var(--cor-resultado-excelente)";
+      caixaResultado.style.border = "2px solid var(--cor-borda-resultado-excelente)";
     } else {
-      textoResultado.style.color = "#263a30";
-      caixaResultado.style.border = "2px solid #718276";
+      textoResultado.style.color = "var(--cor-resultado-normal)";
+      caixaResultado.style.border = "2px solid var(--cor-borda-resultado-normal)";
     }
 
     return;
   }
 
+  botaoCreditosFinal.hidden = true;
+  atualizaCreditos(false);
   progresso.textContent = `Situação ${situacoesRespondidas + 1}`;
   caixaPerguntas.textContent = etapaAtual.enunciado;
   caixaAlternativas.innerHTML = "";
@@ -383,13 +408,20 @@ function mostraPergunta() {
 }
 
 caixaResultado.style.display = "none";
-textoResultado.style.color = "#263a30";
+textoResultado.style.color = "var(--cor-resultado-normal)";
 caixaResultado.style.border = "1px solid transparent";
 botaoReiniciar.style.display = "none";
+
+botoesCreditos.forEach((botao) => {
+  botao.addEventListener("click", () => {
+    atualizaCreditos(creditos.hidden);
+  });
+});
 
 formularioInicial.addEventListener("submit", (evento) => {
   evento.preventDefault();
   nickname = campoNickname.value.trim() || "Visitante";
+  atualizaCreditos(false);
   telaInicial.hidden = true;
   conteudoJogo.hidden = false;
   mostraPergunta();
@@ -401,9 +433,11 @@ botaoReiniciar.addEventListener("click", () => {
   situacoesRespondidas = 0;
   progresso.textContent = "";
   textoResultado.textContent = "";
-  textoResultado.style.color = "#263a30";
+  textoResultado.style.color = "var(--cor-resultado-normal)";
   caixaResultado.style.border = "1px solid transparent";
   conteudoJogo.hidden = true;
+  botaoCreditosFinal.hidden = true;
+  atualizaCreditos(false);
   telaInicial.hidden = false;
   campoNickname.focus();
 });
