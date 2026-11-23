@@ -46,16 +46,16 @@ botaoTema.addEventListener("click", () => {
 
 const fluxo = {
   inicio: {
-    enunciado: "Faltam dois dias para a feira de ciências. Seu grupo vai montar um estande sobre inteligência artificial: quer mostrar usos úteis, mas também riscos e limites. A equipe tem ideias demais e pouco tempo. Qual é o primeiro passo?",
+    enunciado: "Esta é a bifurcação da aventura. Qual história você quer seguir?",
     alternativas: [
       {
-        texto: "Peço à IA um roteiro e uso a resposta para organizar perguntas de pesquisa",
-        narrativa: "Você pede um roteiro à IA, mas transforma cada tópico em uma pergunta para investigar. O grupo divide as tarefas e combina que nenhuma sugestão entrará no estande sem ser compreendida e conferida.",
+        texto: "Escolher o primeiro caminho",
+        narrativa: "Você escolheu o primeiro caminho e pediu um roteiro à IA, transformando cada tópico em uma pergunta para investigar. O grupo divide as tarefas e combina que nenhuma sugestão entrará no estande sem ser compreendida e conferida.",
         proximo: "estudo"
       },
       {
-        texto: "Começo pelas anotações e converso com a professora e a equipe",
-        narrativa: "Você reúne anotações, livros e dúvidas para conversar com a professora. Na reunião, descobre que alguns colegas querem testar ferramentas de IA e outros preferem não usá-las.",
+        texto: "Escolher o segundo caminho",
+        narrativa: "Você escolheu o segundo caminho e reuniu anotações, livros e dúvidas para conversar com a professora. Na reunião, descobriu que alguns colegas querem testar ferramentas de IA e outros preferem não usá-las.",
         proximo: "semIA"
       }
     ]
@@ -589,20 +589,20 @@ Object.entries(fluxo).forEach(([nome, etapa]) => {
   const gameover = { tipo: "gameover", ...caminhos.gameover };
 
   const combinacoes = {
-    inicio: ["avancar", "lateral", "gameover"],
+    inicio: ["avancar", "lateral"],
     estudo: ["avancar", "voltar", "lateral"],
-    dependencia: ["voltar", "lateral", "gameover"],
-    ensaio: ["avancar", "voltar", "gameover"],
-    pesquisa: ["avancar", "lateral", "gameover"],
+    dependencia: ["voltar", "lateral", "avancar"],
+    ensaio: ["avancar", "voltar", "lateral"],
+    pesquisa: ["avancar", "lateral", "voltar"],
     privacidade: ["avancar", "voltar", "gameover"],
     exposicao: ["voltar", "lateral", "gameover"],
     autoria: ["avancar", "lateral", "gameover"],
     vies: ["avancar", "voltar", "lateral"],
-    revisaoAutor: ["voltar", "lateral", "gameover"],
-    acessibilidade: ["avancar", "lateral", "gameover"],
-    impacto: ["avancar", "lateral", "gameover"],
+    revisaoAutor: ["voltar", "lateral", "avancar"],
+    acessibilidade: ["avancar", "lateral", "voltar"],
+    impacto: ["avancar", "lateral", "voltar"],
     apresentacao: ["avancar", "voltar", "lateral"],
-    boato: ["avancar", "voltar", "gameover"],
+    boato: ["avancar", "voltar", "lateral"],
     semIA: ["avancar", "voltar", "lateral"],
     reuniao: ["avancar", "voltar", "lateral"],
     equipe: ["avancar", "voltar", "gameover"],
@@ -650,7 +650,7 @@ function mostraPergunta() {
       ? "GAME OVER"
       : statusFinal === "excelente"
         ? "VITÓRIA!!!"
-        : "THE END";
+        : "VITÓRIA!!!";
     tituloFinal.className = `titulo-final${statusFinal ? ` titulo-final-${statusFinal}` : ""}`;
     tituloFinal.hidden = false;
     textoResultado.hidden = true;

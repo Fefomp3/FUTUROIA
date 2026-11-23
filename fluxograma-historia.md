@@ -30,8 +30,8 @@ flowchart TD
   finalExcelente([Fim excelente: uso crítico e inclusivo])
   finalLimitado([Fim com alerta: barreiras de acesso])
 
-  inicio -->|Planeja com IA| estudo
-  inicio -->|Começa com livros e conversa| semIA
+  inicio -->|Primeiro caminho| estudo
+  inicio -->|Segundo caminho| semIA
   estudo -->|Estuda e confere| pesquisa
   estudo -->|Copia sem entender| dependencia
   dependencia -->|Admite e recomeça| estudo
