@@ -357,6 +357,245 @@ const fluxo = {
   },
 };
 
+const caminhosEspecificos = {
+  inicio: {
+    voltar: {
+      texto: "Reunir a equipe outra vez para listar o que já sabemos",
+      narrativa: "Você pausa o planejamento e volta à primeira conversa da equipe para separar fatos, dúvidas e tarefas antes de escolher uma estratégia.",
+      proximo: "inicio"
+    },
+    gameover: {
+      texto: "Montar o estande agora com o conteúdo que parecer mais chamativo",
+      narrativa: "Sem verificar o conteúdo nem combinar responsabilidades, vocês produzem um estande apressado e pronto para divulgar informações incorretas.",
+      proximo: "finalDesinformacao"
+    }
+  },
+  estudo: {
+    voltar: {
+      texto: "Revisar o roteiro da equipe antes de escolher o que estudar",
+      narrativa: "Você volta ao planejamento inicial e percebe que o grupo começou a explicar um tema antes de definir quais perguntas precisavam responder.",
+      proximo: "inicio"
+    },
+    gameover: {
+      texto: "Copiar o parágrafo mais completo que encontrar e decorar",
+      narrativa: "A pressa vence o cuidado: você mantém um texto que não entende e tenta apresentá-lo como próprio.",
+      proximo: "finalAutoria"
+    }
+  },
+  dependencia: {
+    voltar: {
+      texto: "Abrir novamente as anotações usadas no início do estudo",
+      narrativa: "Você volta ao material original e reconstrói a explicação com a ajuda da equipe, em vez de depender do texto pronto.",
+      proximo: "estudo"
+    },
+    gameover: {
+      texto: "Esconder que você não entende e continuar no ensaio",
+      narrativa: "Para evitar atrasar o grupo, você tenta parecer seguro e esconde que não domina o assunto.",
+      proximo: "finalAutoria"
+    }
+  },
+  ensaio: {
+    voltar: {
+      texto: "Pausar o ensaio e perguntar qual parte não ficou clara",
+      narrativa: "Você volta ao trecho que falhou e pede à equipe que retome a explicação desde o ponto que vocês já dominavam.",
+      proximo: "dependencia"
+    },
+    gameover: {
+      texto: "Improvisar uma resposta que não aparece nas fontes",
+      narrativa: "Durante a pergunta, você inventa uma explicação para não admitir o erro.",
+      proximo: "finalDesinformacao"
+    }
+  },
+  pesquisa: {
+    voltar: {
+      texto: "Revisar o assunto com as explicações estudadas pela equipe",
+      narrativa: "Diante das referências difíceis de confirmar, você volta ao que a equipe já compreendeu e separa esse conhecimento das afirmações novas.",
+      proximo: "estudo"
+    },
+    gameover: {
+      texto: "Publicar os números chamativos sem encontrar as fontes",
+      narrativa: "O prazo parece mais urgente do que a precisão, e o grupo mantém dados que ninguém conseguiu conferir.",
+      proximo: "finalDesinformacao"
+    }
+  },
+  privacidade: {
+    voltar: {
+      texto: "Excluir os exemplos pessoais e reabrir a checagem das fontes",
+      narrativa: "Você percebe que privacidade e pesquisa precisam ser resolvidas juntas e volta à conferência das referências sem dados da turma.",
+      proximo: "pesquisa"
+    },
+    gameover: {
+      texto: "Enviar todos os trabalhos apenas porque a ferramenta foi autorizada",
+      narrativa: "Você ignora nomes e comentários privados e entrega os arquivos completos à ferramenta.",
+      proximo: "finalPrivacidade"
+    }
+  },
+  exposicao: {
+    voltar: {
+      texto: "Voltar à escolha anterior e retirar informações pessoais",
+      narrativa: "Você conversa com a professora e reconsidera qual exemplo poderia ser compartilhado sem expor nomes ou comentários.",
+      proximo: "privacidade"
+    },
+    gameover: {
+      texto: "Ocultar o envio da professora e dos colegas",
+      narrativa: "Você decide não contar sobre os arquivos enviados e deixa a exposição pessoal sem correção.",
+      proximo: "finalPrivacidade"
+    }
+  },
+  autoria: {
+    voltar: {
+      texto: "Retomar os dados já pesquisados antes de publicar o texto",
+      narrativa: "Você percebe que o texto ainda não está transparente e volta às fontes para revisar informações e autoria com o grupo.",
+      proximo: "privacidade"
+    },
+    gameover: {
+      texto: "Apresentar o texto completo como criação exclusiva da equipe",
+      narrativa: "Vocês apagam a participação da IA e fingem que todo o texto surgiu apenas do grupo.",
+      proximo: "finalAutoria"
+    }
+  },
+  vies: {
+    voltar: {
+      texto: "Voltar à revisão do texto e registrar a participação da IA",
+      narrativa: "Você volta à etapa de autoria para corrigir o texto e explicar claramente como a ferramenta ajudou.",
+      proximo: "autoria"
+    },
+    gameover: {
+      texto: "Manter os exemplos tendenciosos porque já estão no cartaz",
+      narrativa: "O grupo decide não questionar generalizações e mantém no estande uma visão que exclui pessoas.",
+      proximo: "finalAutoria"
+    }
+  },
+  revisaoAutor: {
+    voltar: {
+      texto: "Checar novamente os exemplos que mostravam possíveis vieses",
+      narrativa: "Você volta aos exemplos problemáticos e registra quais precisam ser corrigidos antes de qualquer publicação.",
+      proximo: "vies"
+    },
+    gameover: {
+      texto: "Esconder os trechos problemáticos e entregar o cartaz",
+      narrativa: "Sem refazer o conteúdo nem admitir os problemas, vocês apresentam informações que não foram revistas.",
+      proximo: "finalAutoria"
+    }
+  },
+  acessibilidade: {
+    voltar: {
+      texto: "Rever os exemplos inclusivos antes de alterar o cartaz",
+      narrativa: "Você volta ao teste de exemplos diversos e verifica quais formas de apresentação podem excluir visitantes.",
+      proximo: "vies"
+    },
+    gameover: {
+      texto: "Ignorar o aviso do colega para não atrasar a feira",
+      narrativa: "A equipe mantém letras difíceis de ler e muito texto, deixando alguns visitantes de fora.",
+      proximo: "finalLimitado"
+    }
+  },
+  impacto: {
+    voltar: {
+      texto: "Retomar o teste do cartaz antes de acrescentar conteúdo",
+      narrativa: "Você suspende a inclusão da notícia e volta ao material acessível já preparado pela equipe.",
+      proximo: "acessibilidade"
+    },
+    gameover: {
+      texto: "Usar a notícia e a imagem apenas porque parecem reais",
+      narrativa: "Sem conferir autoria nem origem, a equipe publica material sintético como se fosse um fato.",
+      proximo: "finalDesinformacao"
+    }
+  },
+  apresentacao: {
+    voltar: {
+      texto: "Interromper a conversa e conferir a notícia usada no estande",
+      narrativa: "Ao perceber que uma resposta depende de algo não confirmado, você volta à verificação do conteúdo.",
+      proximo: "impacto"
+    },
+    gameover: {
+      texto: "Responder a todas as dúvidas com conclusões inventadas",
+      narrativa: "A equipe prefere parecer segura a admitir limites e cria respostas sem fonte para terminar a apresentação.",
+      proximo: "finalDesinformacao"
+    }
+  },
+  boato: {
+    voltar: {
+      texto: "Voltar ao método usado para verificar as fontes",
+      narrativa: "Você reconhece a falha e volta à etapa da pesquisa para revisar todos os dados com uma lista de fontes confiáveis.",
+      proximo: "pesquisa"
+    },
+    gameover: {
+      texto: "Cobrir o erro e dizer que o dado é verdadeiro",
+      narrativa: "Para evitar constrangimento, vocês mantêm a afirmação falsa no estande.",
+      proximo: "finalDesinformacao"
+    }
+  },
+  semIA: {
+    voltar: {
+      texto: "Voltar ao planejamento geral da feira",
+      narrativa: "Você pede uma nova conversa inicial para organizar o que é necessário antes de decidir como usar ou não a IA.",
+      proximo: "inicio"
+    },
+    gameover: {
+      texto: "Fazer um projeto individual com uma imagem de outra pessoa",
+      narrativa: "Sem combinar limites com o grupo, você usa uma fotografia sem autorização.",
+      proximo: "finalConsentimento"
+    }
+  },
+  reuniao: {
+    voltar: {
+      texto: "Voltar às regras combinadas pela equipe",
+      narrativa: "Você revisa os critérios que a reunião deveria seguir e separa novamente tarefas e fontes aceitáveis.",
+      proximo: "semIA"
+    },
+    gameover: {
+      texto: "Aceitar a estatística mais chamativa para acabar com a discussão",
+      narrativa: "A equipe interrompe a análise e usa um dado sem confirmar apenas para evitar divergências.",
+      proximo: "finalDesinformacao"
+    }
+  },
+  equipe: {
+    voltar: {
+      texto: "Retomar a reunião e perguntar como pedir consentimento",
+      narrativa: "Você volta à divisão de tarefas para conversar sobre autorização antes de qualquer edição ou publicação.",
+      proximo: "reuniao"
+    },
+    gameover: {
+      texto: "Chamar a foto de brincadeira e mantê-la no estande",
+      narrativa: "Vocês minimizam o desconforto da pessoa e continuam expondo sua imagem sem autorização.",
+      proximo: "finalConsentimento"
+    }
+  },
+  reparacaoImagem: {
+    voltar: {
+      texto: "Voltar ao motivo da retirada e conversar novamente com a pessoa",
+      narrativa: "Antes de substituir a imagem, você confirma o que pode ser usado e deixa a pessoa decidir como o problema será reparado.",
+      proximo: "equipe"
+    },
+    gameover: {
+      texto: "Escolher outra foto da turma sem pedir permissão",
+      narrativa: "A equipe troca a primeira imagem por outra sem autorização e repete o mesmo erro.",
+      proximo: "finalConsentimento"
+    }
+  }
+};
+
+Object.entries(fluxo).forEach(([nome, etapa]) => {
+  if (etapa.tipo === "final") return;
+
+  const avancar = etapa.alternativas[0];
+  avancar.tipo = "avancar";
+  const caminhos = caminhosEspecificos[nome];
+
+  etapa.alternativas = [
+    avancar,
+    {
+      tipo: "voltar",
+      ...caminhos.voltar
+    },
+    {
+      tipo: "gameover",
+      ...caminhos.gameover
+    }
+  ];
+});
+
 let estadoAtual = "inicio";
 let situacoesRespondidas = 0;
 let nickname = "Visitante";
@@ -425,11 +664,13 @@ function mostraPergunta() {
     const botaoAlternativas = document.createElement("button");
     botaoAlternativas.type = "button";
     botaoAlternativas.textContent = alternativa.texto;
-    botaoAlternativas.className = "botao-alternativa";
+    botaoAlternativas.className = `botao-alternativa botao-alternativa-${alternativa.tipo}`;
 
     botaoAlternativas.addEventListener("click", () => {
       escolhas.push(alternativa.narrativa);
-      situacoesRespondidas += 1;
+      if (alternativa.tipo !== "voltar") {
+        situacoesRespondidas += 1;
+      }
       estadoAtual = alternativa.proximo;
       mostraPergunta();
     });
