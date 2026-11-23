@@ -581,19 +581,44 @@ Object.entries(fluxo).forEach(([nome, etapa]) => {
 
   const avancar = etapa.alternativas[0];
   avancar.tipo = "avancar";
+  const alternativaLateral = etapa.alternativas[1]
+    ? { ...etapa.alternativas[1], tipo: "lateral" }
+    : null;
   const caminhos = caminhosEspecificos[nome];
+  const voltar = { tipo: "voltar", ...caminhos.voltar };
+  const gameover = { tipo: "gameover", ...caminhos.gameover };
 
-  etapa.alternativas = [
+  const combinacoes = {
+    inicio: ["avancar", "lateral", "gameover"],
+    estudo: ["avancar", "voltar", "lateral"],
+    dependencia: ["voltar", "lateral", "gameover"],
+    ensaio: ["avancar", "voltar", "gameover"],
+    pesquisa: ["avancar", "lateral", "gameover"],
+    privacidade: ["avancar", "voltar", "gameover"],
+    exposicao: ["voltar", "lateral", "gameover"],
+    autoria: ["avancar", "lateral", "gameover"],
+    vies: ["avancar", "voltar", "lateral"],
+    revisaoAutor: ["voltar", "lateral", "gameover"],
+    acessibilidade: ["avancar", "lateral", "gameover"],
+    impacto: ["avancar", "lateral", "gameover"],
+    apresentacao: ["avancar", "voltar", "lateral"],
+    boato: ["avancar", "voltar", "gameover"],
+    semIA: ["avancar", "voltar", "lateral"],
+    reuniao: ["avancar", "voltar", "lateral"],
+    equipe: ["avancar", "voltar", "gameover"],
+    reparacaoImagem: ["avancar", "voltar", "gameover"]
+  };
+
+  const alternativas = {
     avancar,
-    {
-      tipo: "voltar",
-      ...caminhos.voltar
-    },
-    {
-      tipo: "gameover",
-      ...caminhos.gameover
-    }
-  ];
+    voltar,
+    gameover,
+    lateral: alternativaLateral
+  };
+
+  etapa.alternativas = combinacoes[nome]
+    .map((tipo) => alternativas[tipo])
+    .filter(Boolean);
 });
 
 let estadoAtual = "inicio";
@@ -601,6 +626,18 @@ let situacoesRespondidas = 0;
 let nickname = "Visitante";
 const escolhas = [];
 const inicioHistoria = "A feira de ciências da escola acontece amanhã. Você e seu grupo estão preparando um estande sobre inteligência artificial: querem mostrar como ela pode ajudar, mas também quais cuidados são importantes.";
+
+function embaralhar(lista) {
+  const listaEmbaralhada = [...lista];
+
+  for (let indice = listaEmbaralhada.length - 1; indice > 0; indice -= 1) {
+    const indiceAleatorio = Math.floor(Math.random() * (indice + 1));
+    [listaEmbaralhada[indice], listaEmbaralhada[indiceAleatorio]] =
+      [listaEmbaralhada[indiceAleatorio], listaEmbaralhada[indice]];
+  }
+
+  return listaEmbaralhada;
+}
 
 function mostraPergunta() {
   const etapaAtual = fluxo[estadoAtual];
@@ -660,7 +697,7 @@ function mostraPergunta() {
   botaoVerMais.setAttribute("aria-expanded", "false");
   botaoReiniciar.style.display = "none";
 
-  etapaAtual.alternativas.forEach((alternativa) => {
+  embaralhar(etapaAtual.alternativas).forEach((alternativa) => {
     const botaoAlternativas = document.createElement("button");
     botaoAlternativas.type = "button";
     botaoAlternativas.textContent = alternativa.texto;
